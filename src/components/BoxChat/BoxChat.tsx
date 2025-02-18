@@ -1,9 +1,10 @@
 import { CommentOutlined, MessageFilled } from '@ant-design/icons';
 import { FloatButton } from 'antd';
+import CardChat from '../CardChat';
 
 function BoxChat() {
     return (
-        <div style={{ display: 'flex', position: 'absolute', bottom: '24px', right: '160px' }}>
+        <div style={{ display: 'flex', position: 'absolute', bottom: '24px', right: '80px' }}>
             <FloatButton.Group trigger="click" type="primary" style={{ insetInlineEnd: 24 }} icon={<MessageFilled />}>
                 <FloatButton
                     onClick={() => {
@@ -25,7 +26,11 @@ function BoxChat() {
                 />
                 <FloatButton icon={<CommentOutlined />} />
             </FloatButton.Group>
-            <div className="box">adnj</div>
+            <div style={{ display: 'flex' }}>
+                <CardChat id={1}></CardChat>
+                {/* <CardChat id={2}></CardChat>
+                <CardChat id={3}></CardChat> */}
+            </div>
         </div>
     );
 }

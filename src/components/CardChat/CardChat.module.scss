@@ -1,0 +1,24 @@
+.container {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-left: 10px;
+}
+.header {
+    height: 48px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+    padding: 0 8px;
+    .info {
+        padding: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+.footer {
+    display: flex;
+    padding: 8px 10px;
+    justify-content: space-between;
+}

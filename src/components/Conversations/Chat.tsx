@@ -1,5 +1,5 @@
 import { Drawer, Menu } from 'antd';
-import CardMessage from '../CardMessage';
+import CardMessage from '../CardConversations';
 import type { MenuProps } from 'antd';
 import { useSocket } from '../../hooks/useSocket';
 import { memo, useEffect, useState } from 'react';
