@@ -1,6 +1,8 @@
 import { Layout, Menu, Input, Avatar, Dropdown, Space, Typography, Button, Badge } from 'antd';
 import { UserOutlined, SearchOutlined, LogoutOutlined, SettingOutlined, MessageOutlined } from '@ant-design/icons';
 import logo from '../../assets/react.svg';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 const { Header } = Layout;
 const { Text } = Typography;
 type headerType = {
@@ -22,6 +24,7 @@ const userMenu = {
 };
 
 const AppHeader = ({ showDrawer }: headerType) => {
+    const countSelectConversation = useSelector((state: RootState) => state.conversation.numberSelect);
     return (
         <Header style={{ display: 'flex', alignItems: 'center', padding: '0 20px', background: '#001529' }}>
             {/* Logo */}
@@ -36,7 +39,7 @@ const AppHeader = ({ showDrawer }: headerType) => {
             {/* Thanh tìm kiếm */}
             <Input placeholder="Tìm kiếm..." prefix={<SearchOutlined />} style={{ width: 250, marginRight: 20 }} />
             <Space style={{ marginRight: 20 }}>
-                <Badge count={5}>
+                <Badge count={countSelectConversation}>
                     <Button
                         shape="circle"
                         type="primary"

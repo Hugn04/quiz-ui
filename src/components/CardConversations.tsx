@@ -1,15 +1,15 @@
-import { Avatar, Space } from 'antd';
+import { Avatar } from 'antd';
 
 // type participantsType = {
 //     _id: string;
 //     username: string;
 // };
-type cardMessageType = {
+type CardConversationsType = {
     name: string;
     lastMessage: string;
     onClose: () => any;
 };
-function CardMessage({ name, lastMessage, onClose }: cardMessageType) {
+function CardConversations({ name, lastMessage, onClose }: CardConversationsType) {
     return (
         <div onClick={onClose} style={{ display: 'flex', alignItems: 'center' }}>
             <Avatar size={50}></Avatar>
@@ -21,4 +21,4 @@ function CardMessage({ name, lastMessage, onClose }: cardMessageType) {
     );
 }
 
-export default CardMessage;
+export default CardConversations;

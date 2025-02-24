@@ -2,7 +2,7 @@ import { ReactNode, useState } from 'react';
 import styles from './DefaultLayout.module.scss';
 import classNames from 'classnames/bind';
 import Header from '../../components/Header';
-import Chat from '../../components/Conversations/Chat';
+import Chat from '../../components/Conversations/Conversations';
 import BoxChat from '../../components/BoxChat';
 type DefaultLayoutProps = {
     children: ReactNode;

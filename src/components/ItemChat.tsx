@@ -1,11 +1,11 @@
+import type { Message } from '../redux/slices/messageSlice';
+
 type itemChatType = {
-    item: {
-        content: string;
-    };
+    item: Message;
 };
 
 function ItemChat({ item }: itemChatType) {
-    return <div style={{ height: '50px' }}>{item.content}abc</div>;
+    return <div style={{ height: '50px' }}>{item.content}</div>;
 }
 
 export default ItemChat;
