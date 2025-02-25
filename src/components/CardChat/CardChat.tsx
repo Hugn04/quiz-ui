@@ -9,7 +9,7 @@ import { removeSelected, type Conversation } from '../../redux/slices/conversati
 import { useSocket } from '../../hooks/useSocket';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import type { Message } from '../../redux/slices/messageSlice';
-import { addMessages, fetchMessageByConversationId } from '../../redux/slices/messageSlice';
+import { addMessage, addMessages, fetchMessageByConversationId } from '../../redux/slices/messageSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import request from '../../api/request';
@@ -21,16 +21,15 @@ const CardChat = ({ conversation }: { conversation: Conversation }) => {
     const [hasMore, setHasMore] = useState<boolean>(true);
     const conversationMessage = useSelector((state: RootState) => state.message.messages);
     const message = conversationMessage.find((c) => c.conversationId === conversation._id)?.messages ?? [];
-
+    const [input, setInput] = useState<string>('');
     const scrollableDivRef = useRef<HTMLDivElement | null>(null);
     const dispatch = useAppDispatch();
-    const socket = useSocket('getMessage', (message) => {
-        console.log(message);
+    const { socket } = useSocket('message', ({ roomName, message }) => {
+        if (roomName === conversation._id) {
+            dispatch(addMessage({ conversationId: conversation._id, message: message }));
+        }
     });
 
-    // useEffect(() => {
-    //     dispatch(fetchMessageByConversationId(conversation._id));
-    // }, []);
     const loadMoreData = () => {
         if (loading || !scrollableDivRef.current) {
             return;
@@ -40,7 +39,6 @@ const CardChat = ({ conversation }: { conversation: Conversation }) => {
         const previousScrollHeight = scrollableDiv.scrollHeight;
 
         setLoading(true);
-        console.log(message.length);
 
         request
             .get('/get-message', { params: { id: conversation._id, skip: message.length } })
@@ -64,7 +62,13 @@ const CardChat = ({ conversation }: { conversation: Conversation }) => {
             });
     };
 
+    const handleSend = () => {
+        if (input.trim()) {
+            socket.emit('send-message', { roomName: conversation._id, message: input });
+        }
+    };
     useEffect(() => {
+        socket.emit('join-room', conversation._id);
         loadMoreData();
     }, []);
 
@@ -109,14 +113,25 @@ const CardChat = ({ conversation }: { conversation: Conversation }) => {
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         {message &&
                             message.map((item, index) => {
-                                return <ItemChat item={item} key={index}></ItemChat>;
+                                return <ItemChat item={item} key={index} nextItem={message[index + 1]}></ItemChat>;
                             })}
                     </div>
                 </InfiniteScroll>
             </div>
             <div className={cx('footer')}>
-                <Input></Input>
-                <Button shape="circle" style={{ marginLeft: '8px' }} icon={<SendOutlined />} size={'middle'}></Button>
+                <Input
+                    onChange={(e) => {
+                        setInput(e.target.value);
+                    }}
+                    value={input}
+                ></Input>
+                <Button
+                    onClick={handleSend}
+                    shape="circle"
+                    style={{ marginLeft: '8px' }}
+                    icon={<SendOutlined />}
+                    size={'middle'}
+                ></Button>
             </div>
         </div>
     );

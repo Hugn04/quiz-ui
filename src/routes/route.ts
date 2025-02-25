@@ -1,6 +1,8 @@
 import { Fragment, JSX, ReactNode } from 'react';
 import HomePage from '../page/HomePage';
 import Chat from '../components/Test';
+import Login from '../page/Login';
+import Register from '../page/Register';
 type routeType = {
     path: string;
     component: () => JSX.Element;
@@ -8,10 +10,11 @@ type routeType = {
     props?: { [key: string]: any };
 };
 const publicRoute: routeType[] = [
-    { path: '/', component: HomePage },
     { path: '/a', component: Chat, layout: Fragment },
-    { path: '/', component: HomePage },
-    { path: '/', component: HomePage },
+    { path: '/login', component: Login, layout: Fragment },
 ];
-const privateRoute: routeType[] = [];
+const privateRoute: routeType[] = [
+    { path: '/', component: HomePage },
+    { path: '/register', component: Register, layout: Fragment },
+];
 export { publicRoute, privateRoute };

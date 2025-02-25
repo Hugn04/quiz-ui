@@ -67,16 +67,6 @@ const conversationSlice = createSlice({
         removeSelected: (state, action: PayloadAction<string>) => {
             state.selectedConversation = state.selectedConversation.filter((c) => c._id !== action.payload);
         },
-        addAllMessage: (state, action: PayloadAction<{ id: string; messages: Message[] }>) => {
-            console.log(action.payload);
-        },
-        addMessage: (state, action: PayloadAction<{ conversationId: string; message: Message }>) => {
-            const conversation = state.conversations.find((c) => c._id === action.payload.conversationId);
-
-            if (conversation) {
-                conversation.messages.push(action.payload.message);
-            }
-        },
     },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
@@ -100,13 +90,6 @@ const conversationSlice = createSlice({
     },
 });
 
-export const {
-    addConversation,
-    setSelectConversation,
-    removeSelected,
-    addMessage,
-    getAllConversation,
-    addConversationToGroup,
-    addAllMessage,
-} = conversationSlice.actions;
+export const { addConversation, setSelectConversation, removeSelected, getAllConversation, addConversationToGroup } =
+    conversationSlice.actions;
 export default conversationSlice.reducer;

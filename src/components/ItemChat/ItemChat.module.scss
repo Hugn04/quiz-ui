@@ -1,0 +1,23 @@
+.container {
+    margin: 1px 0;
+    display: flex;
+    align-items: center;
+    &.right {
+        justify-content: right;
+    }
+    &.bottom {
+        margin-bottom: 4px;
+    }
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 200px;
+    min-width: 40px;
+    min-height: 36px;
+    background: #176fff;
+    padding: 8px 12px;
+    border-radius: 18px;
+}

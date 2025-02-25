@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import request from '../../api/request';
-import { message } from 'antd';
+
+import type { User } from './userSlice';
 
 export interface Message {
     id: string;
     content: string;
-    sender: 'user' | 'bot';
+    senderId: User;
+    createdAt: string;
 }
 
 export interface Messages {
@@ -27,7 +29,7 @@ export const fetchMessageByConversationId = createAsyncThunk('message/getMessage
 });
 
 const messageSlice = createSlice({
-    name: 'conversation',
+    name: 'message',
     initialState,
     reducers: {
         addMessages: (state, action: PayloadAction<{ conversationId: string; messages: Message[] }>) => {
@@ -42,10 +44,9 @@ const messageSlice = createSlice({
             }
         },
         addMessage: (state, action: PayloadAction<{ conversationId: string; message: Message }>) => {
-            const conversation = state.messages.find((c) => c.conversationId === action.payload.conversationId);
-
-            if (conversation) {
-                conversation.messages.push(action.payload.message);
+            const message = state.messages.find((c) => c.conversationId === action.payload.conversationId);
+            if (message) {
+                message.messages.push(action.payload.message);
             }
         },
     },
@@ -64,5 +65,5 @@ const messageSlice = createSlice({
     },
 });
 
-export const { addMessages } = messageSlice.actions;
+export const { addMessages, addMessage } = messageSlice.actions;
 export default messageSlice.reducer;
